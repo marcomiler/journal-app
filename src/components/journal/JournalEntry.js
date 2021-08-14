@@ -1,29 +1,52 @@
 import React from 'react';
+import moment from 'moment';
+import { useDispatch } from 'react-redux';
+import { activeNote } from '../../actions/notes';
 
-const JournalEntry = () => {
+const JournalEntry = ({ note }) => {
+
+    const { id, title, date, body, url } = note;
+
+    const noteDate = moment(date);
+
+    const dispatch = useDispatch();
+
+    const handleClick = () => {
+        dispatch( activeNote( id, note) );
+    }
+ 
     return (
-        <div className="journal__entry pointer">
-            <div 
-                className="journal__entry-picture"
-                style={{ 
-                    backgroundSize: 'cover',
-                    backgroundImage: 'url(https://haciendofotos.com/wp-content/uploads/las-mejores-fotos-de-paisajes-2020.jpg)'
-                }}
-            >
-            </div>
+        <div 
+            className="journal__entry pointer animate__animated animate__fadeIn"
+            onClick={ handleClick }
+        >
+            {
+                url && 
+                <div 
+                    className="journal__entry-picture"
+                    style={{ 
+                        backgroundSize: 'cover',
+                        backgroundImage: `url(${ url })`,
+                        width: 100,
+                        height: 100
+                        
+                    }}
+                >
+                </div>
+            }
 
             <div className="journal__entry-body">
                 <p className="journal__entry-title">
-                    Un buen dia
+                    { title }
                 </p>
                 <p className="journal__entry-content">
-                   Voluptate dolores placeat omnis saepe expedita deserunt tenetur, porro itaque. Modi ab ducimus deserunt iusto.
+                   { body }
                 </p>
             </div>
 
             <div className="journal__entry-date-box">
-                <span>Monday</span>
-                <h4>28 Junio</h4>
+                <span>{ noteDate.format('dddd') }</span>
+                <h4>{ noteDate.format('Do') }</h4>
             </div>
         </div>
     );

@@ -1,5 +1,6 @@
 import { db } from "../firebase/firebase-config"
 
+//esta funcion la podriamos colocar tambien en los Actions
 export const loadNotes = async ( uid ) => {
 
    const notesSnap = await db.collection(`${uid}/journal/notes`).get();
@@ -14,7 +15,7 @@ export const loadNotes = async ( uid ) => {
         });
    });
 
-//    console.log(notes);
+   // console.log(notes);
    return notes;
 
 }
